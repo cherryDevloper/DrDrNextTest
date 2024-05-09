@@ -10,7 +10,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <Provider store={store}>
-        <NextNProgress options={{ easing: "ease", speed: 500 }} />
+        <NextNProgress height={8} color="#209cee" />
         <Component {...pageProps} />
       </Provider>
     </QueryClientProvider>
