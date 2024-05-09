@@ -1,7 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "@/redux/store";
 import { removeFromCart, clearCart } from "@/redux/slices/cartSlice";
-
+import Layout from "@/components/Layout";
+import GoBackButton from "@/components/GoBackButton";
+import { Button } from "@/components/ui/button";
+import { TrashIcon } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 const CartPage = () => {
   const cart = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
@@ -15,22 +20,46 @@ const CartPage = () => {
   };
 
   return (
-    <div>
-      <h1>Shopping Cart</h1>
-      <ul>
+    <Layout header={<GoBackButton />}>
+      <ul className="">
         {cart.map((item) => (
-          <li key={item.id}>
-            <span>
-              {item.name} - ${item.price} x {item.quantity}
-            </span>
-            <button onClick={() => handleRemoveFromCart(item.id)}>
-              Remove
-            </button>
+          <li
+            key={item.id}
+            className="w-screen p-4 border border-blue-500 m-4 rounded-xl"
+          >
+            <div className="w-full flex justify-end">
+              <Image alt={item.name} src={item.image} width={50} height={100} />
+            </div>
+            <div className="flex items-center justify-between flex-row-reverse">
+              <span>{"تعداد کالا"}</span>
+              <span>{item.quantity}</span>
+            </div>
+            <div className="flex items-center justify-between flex-row-reverse">
+              {" "}
+              <span>{"نام محصول"}</span>
+              <span>{item.name}</span>
+            </div>
+            <div className="flex items-center justify-between flex-row-reverse">
+              <span>{"قیمت"}</span>
+              <span>{item.price}</span>
+            </div>
+            <div className="">
+              <Button
+                onClick={() => handleRemoveFromCart(item.id)}
+                variant={"destructive"}
+              >
+                <TrashIcon />
+                <span>{"پاک کردن محصول "}</span>
+              </Button>
+            </div>
           </li>
         ))}
       </ul>
-      <button onClick={handleClearCart}>Clear Cart</button>
-    </div>
+      <Button onClick={handleClearCart}>حذف همه </Button>
+      <Button>
+        <Link href={"/drugs"}>{"ادامه ی خرید "}</Link>
+      </Button>
+    </Layout>
   );
 };
 
