@@ -30,6 +30,7 @@ const DrugsPage = ({ drugs, currentPage, totalPages }: DrugsPageProps) => {
         name: drug.name,
         price: drug.price,
         quantity: 1,
+        image: drug.image || "",
       })
     );
   };
