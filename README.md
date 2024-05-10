@@ -22,7 +22,7 @@ To get started with the project, follow these steps:
 ### Clone the Repository
 
 ````bash
-git clone <repository-url>
+git clone https://github.com/cherryDevloper/DrDrNextTest.git
 cd drdr-test-app
 
 
