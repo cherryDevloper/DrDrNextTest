@@ -12,6 +12,7 @@ const CartPage = () => {
   const cart = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
   const { toast } = useToast();
+
   const handleRemoveFromCart = (id: number, name: string) => {
     dispatch(removeFromCart(id));
     toast({
@@ -24,7 +25,9 @@ const CartPage = () => {
   const handleClearCart = () => {
     dispatch(clearCart());
   };
-
+  const totalPayment = cart.reduce((total, item) => {
+    return total + item.price * item.quantity;
+  }, 0);
   return (
     <Layout header={<GoBackButton />}>
       <ul>
@@ -64,6 +67,12 @@ const CartPage = () => {
           </li>
         ))}
       </ul>
+      <div>
+        <div className="flex items-center justify-between flex-row-reverse">
+          <span>{"جمع کل"}</span>
+          <span>{totalPayment}</span>
+        </div>
+      </div>
       <div className="flex space-x-5 mt-4">
         <Button onClick={handleClearCart}>حذف همه </Button>
         <Button>
