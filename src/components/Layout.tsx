@@ -13,10 +13,10 @@ const lalezar = Lalezar({
 
 function Layout({ children, header }: Props) {
   return (
-    <main className={`w-screen h-screen ${lalezar.className} m-0`}>
-      <header>{header}</header>
+    <main className={` h-screen ${lalezar.className} m-0`}>
       <section className="flex flex-col items-center justify-center  my-5 p-2 w-full">
-        {children}
+        <header>{header}</header>
+        <div className="max-w-[650px]"> {children}</div>
       </section>
       <Toaster />
     </main>

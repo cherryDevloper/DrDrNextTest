@@ -34,7 +34,7 @@ const CartPage = () => {
         {cart.map((item) => (
           <li
             key={item.id}
-            className="w-screen p-4 border border-blue-500  rounded-xl font-light space-y-4 m-2"
+            className="w-full p-4 border border-blue-500  rounded-xl font-light space-y-4 m-2"
           >
             <div className="w-full flex justify-end">
               <Image alt={item.name} src={item.image} width={50} height={100} />
@@ -67,13 +67,12 @@ const CartPage = () => {
           </li>
         ))}
       </ul>
-      <div>
-        <div className="flex items-center justify-between flex-row-reverse">
-          <span>{"جمع کل"}</span>
-          <span>{totalPayment}</span>
-        </div>
+      <div className="flex items-center justify-between flex-row-reverse p-4">
+        <span>{"جمع کل"}</span>
+        <span>{totalPayment}</span>
       </div>
-      <div className="flex space-x-5 mt-4">
+
+      <div className="flex space-x-4 m-4 ">
         <Button onClick={handleClearCart}>حذف همه </Button>
         <Button>
           <Link href={"/drugs"}>{"ادامه ی خرید "}</Link>
