@@ -7,12 +7,18 @@ import { Button } from "@/components/ui/button";
 import { TrashIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
 const CartPage = () => {
   const cart = useSelector((state: RootState) => state.cart.items);
   const dispatch = useDispatch();
-
-  const handleRemoveFromCart = (id: number) => {
+  const { toast } = useToast();
+  const handleRemoveFromCart = (id: number, name: string) => {
     dispatch(removeFromCart(id));
+    toast({
+      title: name,
+      description: "با موفقیت از سبد خرید پاک شد ",
+      variant: "destructive",
+    });
   };
 
   const handleClearCart = () => {
@@ -21,11 +27,11 @@ const CartPage = () => {
 
   return (
     <Layout header={<GoBackButton />}>
-      <ul className="">
+      <ul>
         {cart.map((item) => (
           <li
             key={item.id}
-            className="w-screen p-4 border border-blue-500 m-4 rounded-xl"
+            className="w-screen p-4 border border-blue-500  rounded-xl font-light space-y-4 m-2"
           >
             <div className="w-full flex justify-end">
               <Image alt={item.name} src={item.image} width={50} height={100} />
@@ -45,17 +51,20 @@ const CartPage = () => {
             </div>
             <div className="">
               <Button
-                onClick={() => handleRemoveFromCart(item.id)}
+                size={"sm"}
+                onClick={() => handleRemoveFromCart(item.id, item.name)}
                 variant={"destructive"}
               >
                 <TrashIcon />
-                <span>{"پاک کردن محصول "}</span>
+                <span className="text-[0.5rem] font-light">
+                  {"پاک کردن محصول "}
+                </span>
               </Button>
             </div>
           </li>
         ))}
       </ul>
-      <div className="flex space-x-5">
+      <div className="flex space-x-5 mt-4">
         <Button onClick={handleClearCart}>حذف همه </Button>
         <Button>
           <Link href={"/drugs"}>{"ادامه ی خرید "}</Link>
