@@ -55,10 +55,12 @@ const CartPage = () => {
           </li>
         ))}
       </ul>
-      <Button onClick={handleClearCart}>حذف همه </Button>
-      <Button>
-        <Link href={"/drugs"}>{"ادامه ی خرید "}</Link>
-      </Button>
+      <div className="flex space-x-5">
+        <Button onClick={handleClearCart}>حذف همه </Button>
+        <Button>
+          <Link href={"/drugs"}>{"ادامه ی خرید "}</Link>
+        </Button>
+      </div>
     </Layout>
   );
 };
