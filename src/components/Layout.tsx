@@ -15,7 +15,7 @@ function Layout({ children, header }: Props) {
   return (
     <main className={`w-screen h-screen ${lalezar.className} m-0`}>
       <header>{header}</header>
-      <section className="flex flex-col items-center justify-center border my-5 p-2 w-full">
+      <section className="flex flex-col items-center justify-center  my-5 p-2 w-full">
         {children}
       </section>
       <Toaster />
