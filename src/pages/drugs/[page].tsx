@@ -8,31 +8,27 @@ import {
 import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import Link from "next/link";
-import { useDispatch } from "react-redux";
-import { addToCart } from "@/redux/slices/cartSlice";
 import { Button } from "@/components/ui/button";
 import Layout from "@/components/Layout";
 import { Drug, DrugsPageProps } from "@/types";
 import Image from "next/image";
-import ShoppinCartBadge from "@/components/ShoppinCartBadge";
-
+import dynamic from "next/dynamic";
+const SaveButton = dynamic(() => import("../../components/SaveButton"), {
+  ssr: false,
+});
+const ShoppinCartBadge = dynamic(
+  () => import("@/components/ShoppinCartBadge"),
+  {
+    ssr: false,
+  }
+);
 const DrugsPage = ({ drugs, currentPage, totalPages }: DrugsPageProps) => {
-  const dispatch = useDispatch();
   const { toast } = useToast();
   const handleAddToCart = (drug: Drug) => {
     toast({
       title: drug.name,
       description: "با موفقیت به سبد خرید اضافه شد ",
     });
-    dispatch(
-      addToCart({
-        id: drug.id,
-        name: drug.name,
-        price: drug.price,
-        quantity: 1,
-        image: drug.image || "",
-      })
-    );
   };
   const pageNumbers = Array.from({ length: totalPages }, (v, k) => k + 1);
   return (
@@ -55,15 +51,11 @@ const DrugsPage = ({ drugs, currentPage, totalPages }: DrugsPageProps) => {
                 {drug.price + " " + "تومان"}
               </span>
             </div>
-
-            <Button
-              variant={"outline"}
-              onClick={() => {
-                handleAddToCart(drug);
-              }}
-            >
-              {"افزودن"}
-            </Button>
+            <SaveButton
+              item={drug}
+              storageKey="cart"
+              onClick={() => handleAddToCart(drug)}
+            />
           </li>
         ))}
       </ul>
@@ -84,7 +76,11 @@ const DrugsPage = ({ drugs, currentPage, totalPages }: DrugsPageProps) => {
           ))}
 
           <PaginationNext
-            href={currentPage < totalPages ? `/drugs/${currentPage + 1}` : "#"}
+            href={
+              currentPage < totalPages
+                ? `/drugs/${currentPage + 1}`
+                : `/drugs/${totalPages}`
+            }
           />
         </Pagination>
       </div>

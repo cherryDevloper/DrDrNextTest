@@ -1,12 +1,12 @@
-import { RootState } from "@/redux/store";
+import { getDataFromLocalStorage } from "@/utils/localstorageHelper";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import { useSelector } from "react-redux";
 
 function ShoppinCartBadge() {
-  const cart = useSelector((state: RootState) => state.cart.items);
-  const quantityLength = cart.reduce((accumulator, item) => {
+  const carts = getDataFromLocalStorage("cart");
+
+  const quantityLength = carts?.reduce((accumulator: any, item: any) => {
     return accumulator + item.quantity;
   }, 0);
   return (
@@ -19,7 +19,7 @@ function ShoppinCartBadge() {
           className="ml-4 mt-2"
           height={"30"}
         />
-        {cart.length !== 0 && (
+        {carts?.length !== 0 && (
           <div className="bg-red-400 text-sm absolute w-4 h-4 -bottom-2 left-4 flex items-center justify-center text-white rounded-full">
             {quantityLength}
           </div>

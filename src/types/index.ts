@@ -10,3 +10,10 @@ export interface DrugsPageProps {
   currentPage: number;
   totalPages: number;
 }
+export interface CartItem {
+  id: number;
+  name: string;
+  price: number;
+  quantity: number;
+  image: string;
+}
