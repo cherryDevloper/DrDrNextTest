@@ -108,14 +108,21 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const currentPage = parseInt(page as string, 10);
   const pageSize = 5;
 
-  const { data } = await axios.get(
-    `http://localhost:4000/drugs?_page=${currentPage}&_per_page=${pageSize}`
-  );
+  const apiUrl = `http://localhost:3000/api/drugs?_page=${currentPage}&_per_page=${pageSize}`;
+
+  const res = await fetch(apiUrl);
+  if (!res.ok) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const drugs = await res.json();
   const totalRecords = 20;
   const totalPages = Math.ceil(totalRecords / pageSize);
   return {
     props: {
-      drugs: data,
+      drugs,
       currentPage,
       totalPages,
     },
