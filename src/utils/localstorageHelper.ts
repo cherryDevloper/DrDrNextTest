@@ -45,3 +45,14 @@ export const removeDataFromLocalStorage = (key: string, id: string) => {
     console.error("Error removing data from localStorage", err);
   }
 };
+export const removeAllDataFromLocalStorage = (key: string) => {
+  try {
+    const existingData = localStorage.getItem(key);
+    if (!existingData) {
+      return;
+    }
+    localStorage.setItem(key, JSON.stringify([]));
+  } catch (error) {
+    console.error("Error removing data from localStorage", error);
+  }
+};
