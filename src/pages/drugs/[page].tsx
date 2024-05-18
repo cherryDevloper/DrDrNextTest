@@ -107,7 +107,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { page } = context.params || {};
   const currentPage = parseInt(page as string, 10);
   const pageSize = 5;
-
+  const totalRecords = 20;
+  const totalPages = Math.ceil(totalRecords / pageSize);
+  if (currentPage < 1 || currentPage > totalPages) {
+    return {
+      notFound: true,
+    };
+  }
   const apiUrl = `http://localhost:3000/api/drugs?_page=${currentPage}&_per_page=${pageSize}`;
 
   const res = await fetch(apiUrl);
@@ -118,8 +124,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   }
 
   const drugs = await res.json();
-  const totalRecords = 20;
-  const totalPages = Math.ceil(totalRecords / pageSize);
+
   return {
     props: {
       drugs,
